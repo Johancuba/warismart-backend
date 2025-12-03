@@ -1,0 +1,48 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+.vs/
+
+# Rider
+.idea/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]ny [Cc]PU/
+[Bb]uild/
+[Bb]uilds/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet Packages
+*.nupkg
+.nuget/packages/
+project.lock.json
+project.fragment.lock.json
+packages/
+
+# Environment variables (IMPORTANTE: NO subir credenciales)
+appsettings.Development.json
+appsettings.Local.json
+.env
+.env.local
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS generated files
+.DS_Store
+Thumbs.db
