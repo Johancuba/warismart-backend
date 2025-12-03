@@ -39,10 +39,14 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // CORS Configuration
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        builder => builder.AllowAnyOrigin()
+    options.AddPolicy("AllowSpecificOrigins",
+        builder => builder.WithOrigins(
+                            "https://warismart.gustosolutions.tech",
+                            "http://localhost:5173"
+                          )
                           .AllowAnyMethod()
-                          .AllowAnyHeader());
+                          .AllowAnyHeader()
+                          .AllowCredentials());
 });
 
 // Localization Configuration
@@ -145,7 +149,7 @@ app.UseRequestLocalization(localizationOptions);
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowAll");
+app.UseCors("AllowSpecificOrigins");
 
 app.UseAuthorization();
 
