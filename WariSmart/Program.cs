@@ -64,6 +64,7 @@ builder.Services.AddSwaggerGen(options => options.EnableAnnotations());
 
 // Configure Database Context and Logging Levels
 if (builder.Environment.IsDevelopment())
+{
     builder.Services.AddDbContext<AppDbContext>(
         options =>
         {
@@ -77,25 +78,39 @@ if (builder.Environment.IsDevelopment())
                 .EnableSensitiveDataLogging()
                 .EnableDetailedErrors();
         });
+}
 else if (builder.Environment.IsProduction())
+{
     builder.Services.AddDbContext<AppDbContext>(options =>
     {
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-            .AddEnvironmentVariables()
-            .Build();
-        var connectionStringTemplate = configuration.GetConnectionString("DefaultConnection");
-        if (string.IsNullOrEmpty(connectionStringTemplate)) 
-            // Stop the application if the connection string template is not set.
-            throw new Exception("Database connection string template is not set in the configuration.");
-        var connectionString = Environment.ExpandEnvironmentVariables(connectionStringTemplate);
+        // Get connection string from configuration (which includes environment variables)
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        
+        // If not found in config, try to build from individual environment variables
         if (string.IsNullOrEmpty(connectionString))
-            // Stop the application if the connection string is not set.
-            throw new Exception("Database connection string is not set in the configuration.");
+        {
+            var host = Environment.GetEnvironmentVariable("MYSQLHOST");
+            var port = Environment.GetEnvironmentVariable("MYSQLPORT") ?? "3306";
+            var database = Environment.GetEnvironmentVariable("MYSQLDATABASE");
+            var user = Environment.GetEnvironmentVariable("MYSQLUSER");
+            var password = Environment.GetEnvironmentVariable("MYSQLPASSWORD");
+            
+            if (string.IsNullOrEmpty(host) || string.IsNullOrEmpty(database) || 
+                string.IsNullOrEmpty(user) || string.IsNullOrEmpty(password))
+            {
+                throw new Exception("Database connection configuration is missing. Please set either ConnectionStrings:DefaultConnection or MYSQL environment variables.");
+            }
+            
+            connectionString = $"Server={host};Port={port};Database={database};User={user};Password={password};CharSet=utf8mb4;SslMode=Preferred;";
+        }
+        
+        Console.WriteLine($"Connecting to database: {connectionString.Split("Password=")[0]}[PASSWORD_HIDDEN]");
+        
         options.UseMySQL(connectionString)
             .LogTo(Console.WriteLine, LogLevel.Error)
             .EnableDetailedErrors();
     });
+}
 
 // Configure Dependency Injection
 
