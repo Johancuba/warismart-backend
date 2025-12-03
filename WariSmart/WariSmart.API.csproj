@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>false</InvariantGlobalization>
@@ -11,16 +11,16 @@
         <!-- Audit Trails related related packages -->
         <PackageReference Include="EntityFrameworkCore.CreatedUpdatedDate" Version="8.0.0"/>
         <!-- Entity Framework Core related packages -->
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.6"/>
         <!-- MySQL Entity Framework Core related packages -->
-        <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.6"/>
+        <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.0"/>
         <!-- Naming convention conversion related packages -->
         <PackageReference Include="Humanizer" Version="2.14.1"/>
         <!-- Swagger related packages -->
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.6"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0"/>
     </ItemGroup>
 
     <ItemGroup>
