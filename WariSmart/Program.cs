@@ -36,6 +36,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Configure Lower Case URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
+// CORS Configuration
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
 // Localization Configuration
 builder.Services.AddLocalization();
 
@@ -136,8 +145,12 @@ app.UseRequestLocalization(localizationOptions);
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAll");
+
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+//"DefaultConnection": "server=warismart-db.mysql.database.azure.com;user=teamwarismart@warismart-db;password=Warismartpassword123;database=WarismartDB"
